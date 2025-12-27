@@ -13,17 +13,24 @@
       forAllSystems = apply:
         lib.genAttrs
         [ "x86_64-linux" ]
-        (system: apply inputs.nixpkgs.legacyPackages.${system});
+        (system: apply inputs.nixpkgs.legacyPackages.${system} system);
     in {
+      # This is for checking out what modules look like in the repl
+      # To do this, do:
+      # > nix repl .
+      # You can then read from `wrappers.$YOUR_SYSTEM` to see what they actually
+      # end up being resolved to
+      wrappers = forAllSystems (pkgs: _:
+        import ./default.nix {
+          inherit pkgs;
+          adios = inputs.adios.adios;
+        }
+      );
       packages = forAllSystems (
-        pkgs:
+        pkgs: system:
         let
-          wrappers = import ./default.nix {
-            inherit pkgs;
-            adios = inputs.adios.adios;
-          };
-        in
-        {
+          wrappers = inputs.self.wrappers.${system};
+        in {
           # Call the less module with our desired options. We could just pass
           # `{}` to use all the defaults, but we're gonna override a value here
           # for demo purposes
