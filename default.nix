@@ -21,7 +21,7 @@ let
   # We could inject pkgs when actually calling the modules, so the `modules`
   # attributes would instead look like:
   # modules = {
-  #   less = import ./less { inherit adios pkgs; };
+  #   less = import ./less.nix { inherit adios pkgs; };
   # };
   # But what if a module didn't use pkgs? This certainly isn't very lazy.
   #
