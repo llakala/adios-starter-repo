@@ -2,11 +2,14 @@
 let
   # We create a "root module", that then sets under modules as accessible from
   # it. Think of the `modules` field as allowing us to reach some module, so we
-  # can then call it in a file like this.
+  # can then call it in a file like this. it's also used for inputs resolution
+  # (long story, see the less module for a full explainer of this)
   root = {
     name = "root";
-    # This is a helper function that means we don't have to write out the files to be called
-    # However, for posterity, it would expand here to:
+
+    # This is a helper function, that means we don't have to write out the files
+    # to be called. However, for posterity, it would expand here to:
+    #
     # modules = {
     #   nixpkgs = import ./nixpkgs.nix { inherit adios; };
     #   less = import ./less.nix { inherit adios; };
@@ -20,9 +23,11 @@ let
   #
   # We could inject pkgs when actually calling the modules, so the `modules`
   # attributes would instead look like:
+  #
   # modules = {
   #   less = import ./less.nix { inherit adios pkgs; };
   # };
+  #
   # But what if a module didn't use pkgs? This certainly isn't very lazy.
   #
   # Our solution is to create a `nixpkgs` module with a pkgs option. If a module
@@ -59,6 +64,6 @@ in
   # - something we'd like to avoid. The eval stage creates a functor that does
   # this annoying work for us.
   #
-  # If we wanted to override the state of an option, we'd do `wrappers.foo {
-  # someOption = 5; }`.
+  # If we wanted to override the state of an option, we'd do:
+  # `wrappers.foo { someOption = 5; }`
   tree.root.modules
