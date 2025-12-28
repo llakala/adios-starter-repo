@@ -4,6 +4,12 @@ let
 in {
   name = "less";
 
+  # Special toplevel attribute of adios modules. Here, we list modules that we'd
+  # like read access to. You know how in nixos, you can do
+  # `config.programs.git.enable` to read from the git module? Well, this is
+  # pretty much the same thing - but because adios is lazy, we have to specify
+  # which modules we want to read from. We can read from another module's
+  # options, or (in one of my unmerged PRs), even call that module's impl.
   inputs = {
     # This path syntax is weird. It is _not_ a path on disk. Instead, it's a
     # path "from the root module", following the `modules` tree.
