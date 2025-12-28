@@ -28,9 +28,21 @@
           adios = inputs.adios.adios;
         }
       );
+
+      # Of course, the packages we expose. This lets us actually build our
+      # wrappers, with `nix build .#less`. Then we can inspect their contents by
+      # looking through the `result` symlink and making sure they got
+      # constructed as we expected.
+      #
+      # You'll notice I didn't say to use `nix run`. This is because for
+      # actually executing your wrapped programs, I instead recommend creating a
+      # direnv-powered devshell. I hope to add an example of that to the repo in
+      # the future.
       packages = forAllSystems (
         pkgs: system:
         let
+          # `self` is a special flake input that's always included, and lets us
+          # read from another one of our flake outputs easily.
           wrappers = inputs.self.wrappers.${system};
         in {
           # Call the less module with our desired options. We could just pass
