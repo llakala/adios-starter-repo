@@ -61,6 +61,11 @@ in {
         wrapProgram $out/bin/less \
           --set LESS "${options.flags}"
       '';
+      # meta.mainProgram sets the executable within `/bin` to be used when
+      # executing `nix run`. If there are multiple executables in /bin, the nix
+      # cli isn't sure which to choose, and gives a warning. Specifying the
+      # path to the binary fixes this! In context, we're saying that the binary
+      # to be run is located at `/bin/less` within the built derivation.
       meta.mainProgram = "less";
     };
 }
