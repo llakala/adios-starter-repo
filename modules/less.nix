@@ -24,7 +24,7 @@ in {
     #   less = import ./less.nix { inherit adios; };
     # };
     #
-    # Then to use the nixpkgs module as an input, we'd have to do `/other_name`
+    # Then to use the nixpkgs module as an input, we'd have to do `/OTHER_NAME`
 
     # This also works in a nested context. Let's imagine a world where the
     # nixpkgs module also had its own `modules` attrset, that looked like this:
