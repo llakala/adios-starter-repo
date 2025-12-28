@@ -2,6 +2,9 @@
 let
   inherit (adios) types;
 in {
+  # The name parameter used to have a special adios meaning, but it's now only
+  # really useful for improving error logs. Feel free to omit it if you want - I
+  # just include it by habit.
   name = "less";
 
   # Special toplevel attribute of adios modules. Here, we list modules that we'd
