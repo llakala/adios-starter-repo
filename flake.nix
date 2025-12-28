@@ -10,6 +10,8 @@
   outputs = inputs:
     let
       inherit (inputs.nixpkgs) lib;
+      # This lets us parameterize over system - see
+      # https://ayats.org/blog/no-flake-utils
       forAllSystems = apply:
         lib.genAttrs
         [ "x86_64-linux" ]
