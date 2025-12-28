@@ -56,6 +56,25 @@ in {
     };
   };
 
+  # An adios module is essentially a fancy function. We create some options,
+  # define some inputs to read from, and then call the `impl` of the module with
+  # the values of those options and inputs.
+  #
+  # A module's impl "produces" what we wanted from the module. In the case of
+  # this module, it creates the less derivation. Note that this impl is NOT
+  # changing the value of any options. It's just producing a result, that we're
+  # free to use or ignore.
+  #
+  # This is a big part of why adios is able to be lazy. You can have 1000
+  # modules that all create wrappers for individual programs, but if you never
+  # call the impl of those modules, then their wrappers can be completely
+  # ignored.
+  #
+  # Finally, note that if you want a module to not just create some output, but
+  # also mutate the options of other modules, there IS actually a way to do
+  # this, from one of my PRs. It's very new, and not user-friendly at all yet -
+  # so I recommend ignoring it for now. However, if you want to take a plunge
+  # into unfriendly territory, check out https://github.com/adisbladis/adios/pull/26.
   impl =
     { options, inputs }:
     let
