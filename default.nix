@@ -40,10 +40,10 @@ let
   # modules can read from it? We need to change the state of the module, so when
   # a module tries to read from it, it gets our modified value.
   #
-  # This is what the `.eval` stage lets us do. We inject a value for the pkgs
-  # option here, so when the other modules read from the nixpkgs module, it gets
-  # our custom value!
-  tree = (adios root).eval {
+  # This is what we do here, in what's called "the eval stage". We inject a
+  # value for the pkgs option, so when the other modules read from the nixpkgs
+  # module, they'll get our custom value!
+  tree = adios root {
     options = {
       "/nixpkgs" = {
         inherit pkgs;
@@ -66,4 +66,4 @@ in
   #
   # If we wanted to override the state of an option, we'd do:
   # `wrappers.foo { someOption = 5; }`
-  tree.root.modules
+  tree.modules
