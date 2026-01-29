@@ -1,4 +1,5 @@
-{ adios }:
+# Every module is passed `adios` directly
+adios:
 
 {
   name = "nixpkgs";

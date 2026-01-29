@@ -1,7 +1,9 @@
-{ adios }:
-let
-  inherit (adios) types;
-in {
+# Every module is passed `adios` directly. Most of the time, we only want to get
+# the `types` attribute from the adios attrset, so we can use a set pattern to
+# only grab types.
+{ types, ... }:
+
+{
   # The name parameter used to have a special adios meaning, but it's now only
   # really useful for improving error logs. Feel free to omit it if you want - I
   # just include it by habit.
